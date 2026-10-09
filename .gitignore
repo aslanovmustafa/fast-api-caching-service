@@ -2,6 +2,18 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+.coverage
+htmlcov/
+
+
+# Local db and generated payloads
+data/
+*.db
+*.db-*
 
 # Virtual environments
 .venv/
