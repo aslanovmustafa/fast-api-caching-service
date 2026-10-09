@@ -72,6 +72,25 @@ def test_empty_payload_does_not_call_transformer(client):
     assert client.get(f"/payload/{response.json()['id']}").json() == {"output": ""}
 
 
+def test_large_request_uses_all_cache_batches(client):
+    data = {
+        "list_1": [f"left-{index}" for index in range(1000)],
+        "list_2": [f"right-{index}" for index in range(1000)],
+    }
+    with patch("app.transformer.transform", side_effect=str.upper) as transform:
+        first = client.post("/payload", json=data)
+        repeated = client.post("/payload", json=data)
+    assert first.status_code == 201
+    assert repeated.status_code == 200
+    assert transform.call_count == 2000
+    output = client.get(f"/payload/{first.json()['id']}").json()["output"]
+    assert output.split(", ") == [
+        value.upper()
+        for pair in zip(data["list_1"], data["list_2"], strict=True)
+        for value in pair
+    ]
+
+
 def test_cache_survives_restarting_application(tmp_path):
     settings = Settings(data_dir=tmp_path)
     data = {"list_1": ["a"], "list_2": ["b"]}

@@ -1,3 +1,4 @@
+import sqlite3 as sq
 from pathlib import Path
 from typing import Any, Generator
 
@@ -9,7 +10,11 @@ from sqlalchemy.orm import Session
 def build_engine(database_path: Path):
     return create_engine(
         URL.create("sqlite", database=str(database_path)),
-        connect_args={"check_same_thread": False, "timeout": 60},
+        connect_args={
+            "check_same_thread": False,
+            "timeout": 60,
+            "autocommit": sq.LEGACY_TRANSACTION_CONTROL,
+        },
     )
 
 

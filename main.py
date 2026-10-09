@@ -4,6 +4,7 @@ from fastapi import FastAPI
 
 from app.config import Settings
 from app.database import build_engine
+from app.errors import register_error_handlers
 from app.models import Base
 from app.routes import router
 
@@ -26,6 +27,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             engine.dispose()
 
     app = FastAPI(title="Payload cache", lifespan=lifespan)
+    register_error_handlers(app)
     app.include_router(router)
 
     @app.get("/health")
