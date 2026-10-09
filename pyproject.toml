@@ -9,20 +9,19 @@ description = "FastAPI caching service"
 authors = [{ name = "Mustafa Aslanov", email = "aslanovmustafa@yahoo.com"}]
 requires-python = ">=3.12"
 dependencies = [
-    "fastapi>=0.115,<1",
-    "uvicorn>=0.34,<1",
-    "SQLAlchemy>=2.0,<2.1",
-    "Flask-SQLAlchemy>3.0.0",
-    "pydantic>=2.14.0,<2.15",
-    "pydantic-settings>=2.10,<3",
-    "httpx>=0.28,<1",
+    "fastapi==0.143.0",
+    "uvicorn==0.54.0",
+    "SQLAlchemy==2.0.54",
+    "pydantic==2.14.0",
+    "pydantic-settings==2.15.0",
+    "httpx==0.28.1",
 ]
 
 [project.optional-dependencies]
-dev = [
-    "pytest>=8,<10",
-    "ruff>=0.11,<1"
-]
+dev = ["pytest==9.1.1", "ruff==0.16.10"]
+
+[project.scripts]
+cache-cli = "app.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["app*"]
