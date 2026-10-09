@@ -7,6 +7,9 @@ InputString = Annotated[
     StringConstraints(strict=True, max_length=1000),
 ]
 
+PayloadId = Annotated[str, StringConstraints(pattern=r"^[0-9a-f]{64}$")]
+
+
 class PayloadCreate(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -19,5 +22,11 @@ class PayloadCreate(BaseModel):
             raise ValueError("The length of list_1 and list_2 must be equal")
         return self
 
+
 class PayloadContent(BaseModel):
     output: str
+
+
+class PayloadCreated(BaseModel):
+    id: PayloadId
+    message: str
