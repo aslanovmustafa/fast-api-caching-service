@@ -14,8 +14,8 @@ def get_transformations(session: Session, values: list[str]) -> dict[str, str]:
     unique_values = list(dict.fromkeys(values))
     results = {}
     for i in range(0, len(unique_values), 500):
-        statement = select(Transformation).where(
-            Transformation.source == unique_values[i : i + 500]
+        statement = select(Transformation.source, Transformation.result).where(
+            Transformation.source.in_(unique_values[i : i + 500])
         )
         results.update(session.execute(statement).all())
 
