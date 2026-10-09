@@ -1,0 +1,20 @@
+.git
+.idea
+.venv
+venv
+env
+.env
+.env.*
+**/__pycache__
+.pytest_cache
+.ruff_cache
+*.egg-info
+build
+dist
+.coverage
+htmlcov
+data
+*.db
+*.db-*
+*.jsonl
+Test task Python.md
